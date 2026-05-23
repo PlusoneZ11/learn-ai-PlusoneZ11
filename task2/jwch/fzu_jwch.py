@@ -4,15 +4,30 @@ import re
 import time
 import json
 import os
-from lxml import etree
 from urllib.parse import urljoin
 
+from requests import RequestException
 
 url='https://jwch.fzu.edu.cn'
+
 
 with open('教务通知.csv','w',newline='',encoding='utf-8-sig') as f:
     writer=csv.writer(f)
     writer.writerow(['通知人','标题','日期','详情链接','附件名','附件下载次数','附件链接码'])
+
+
+progress_file="progress.text"
+def save_progress(current_page,total):
+    with open(progress_file,'w',encoding='utf-8')as f:
+        f.write(f"{current_page}\n{total}")
+def load_progress():
+    if os.path.exists(progress_file):
+        with open (progress_file,'r',encoding='utf-8')as f:
+            lines=f.read().strip().strip('\n')
+            if len(lines)>=2:
+                return int(lines[0]),int(lines[1])
+    return 211,0
+
 
 def parse_list_page(html,current_url):
     notices=[]
@@ -84,11 +99,11 @@ def get_attachment(detail_url,html):
     return attachments
 
 
-total=0
+total=load_progress()
 processed=0
 max_pages=100
 success=0
-current_page=211
+current_page=load_progress()
 
 while total<500 and processed<max_pages:
     if processed==0:
@@ -97,9 +112,19 @@ while total<500 and processed<max_pages:
         list_url=f'{url}/jxtz/{current_page}.htm'
         current_page-=1
 
-    headers={'User-Agent':'Mozilla/5.0'}
-    response=requests.get(list_url,headers=headers,timeout=15)
-    response.encoding='utf_8'
+    for trys in range(3):
+        try:
+            headers={'User-Agent':'Mozilla/5.0'}
+            response=requests.get(list_url,headers=headers,timeout=15)
+            response.encoding='utf_8'
+            break
+        except requests.exceptions.RequestException as e:
+            if trys==2:
+                processed+=1
+                save_progress(current_page, total)
+                time.sleep(3)
+                continue
+            time.sleep(3)
 
     notices=parse_list_page(response.text,list_url)
     for notice in notices:
@@ -125,9 +150,11 @@ while total<500 and processed<max_pages:
 
         total+=1
         success+=1
+        save_progress(current_page,total)
         time.sleep(0.5)
 
     processed += 1
+    save_progress(current_page,total)
     time.sleep(1)
 
 print(f"成功爬取: {success} 条通知")
