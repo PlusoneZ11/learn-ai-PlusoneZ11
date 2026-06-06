@@ -21,9 +21,13 @@
 3.请将Peter的50 V给我，否则不给分。
 
 > Dear Peter
+
 > I will introduce my plan in this Thursday for you，I will go to KFC and have________________
+
 > I'm looking forward to your reply and the V 50 from you.
+
 > Yours，
+
 > LiHua
 
 ## 点餐指南（伪代码）
