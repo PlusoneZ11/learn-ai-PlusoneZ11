@@ -1,28 +1,31 @@
 ## 基础容器
 
-
 ### 列表：list
 
 **定义**：有序、可变、元素类型可不同，可嵌套。
 
 **索引**：访问 list 中每一个位置的元素。
-  - 从 0 开始；-1 获取最后一个元素。
-  - 正向索引：0~len(x)-1，反向索引：-len(x)~-1。
-  - 当索引超出范围时，会报 IndexError 错误。
+
+- 从 0 开始；-1 获取最后一个元素。
+- 正向索引：0~len(x)-1，反向索引：-len(x)~-1。
+- 当索引超出范围时，会报 IndexError 错误。
   
 **切片**：等同于字符串索引。
-  - `[start:end:step]`。
-  - 切片赋值是改变原列表的排列，不会生成新列表。
-  - 对于**步长为 1**的切片赋值，完成的功能是连续替换，等号左右总数可以不等。
-  - 对于**步长大于 1**的切片赋值，完成的是逐一替换，故等号左右数要一致。
-  - 切片被字符赋值时，字符串会被拆开，字符串长度要和切片长度一致。
+
+- `[start:end:step]`。
+- 切片赋值是改变原列表的排列，不会生成新列表。
+- 对于**步长为 1**的切片赋值，完成的功能是连续替换，等号左右总数可以不等。
+- 对于**步长大于 1**的切片赋值，完成的是逐一替换，故等号左右数要一致。
+- 切片被字符赋值时，字符串会被拆开，字符串长度要和切片长度一致。
 
 **运算**：
+
 - `+`号用于拼接列表。
 - `*`号用于生成重复的列表。
 - 比较运算是对对应位置上的元素进行的，需要保持类型一致。
 
 **常用属性方法**：
+
 - 增：`append(x)`，`extend(list)`，`insert(index,obj)`。
 
 - 删：`remove(x)`：删除第一次出现。
@@ -38,6 +41,7 @@
 - 复制：`L.copy()`：浅拷贝。
 
 **列表推导式**：用可迭代对象，依次生成列表内元素
+
 - `[表达式 for变量 in可迭代对象 if条件表达式]`
 
 ### 字典：dict
@@ -45,13 +49,15 @@
 **定义**：以键-值存储的集合，一一对应，可存储任意类型，无序，键必须不可变且唯一。
 
 **创建**：
-  - 空字典：`d={ }`。
-  - `d = dict(name="Bob", age=30)`。
-  - `d = {"name":"xiaoming","age":35}`。
+
+- 空字典：`d={ }`。
+- `d = dict(name="Bob", age=30)`。
+- `d = {"name":"xiaoming","age":35}`。
 
 **访问**：`d[key]`，`d.get(key, default)`。
 
 **常用操作**：
+
 - 增/改：`d[key] = value`.
 
 - 删：`pop(key)`移除键，同时返回键对应的值，`del d[key]`，`clear()`
@@ -61,15 +67,17 @@
 - 复制：`copy()`。
 
 **视图**
-  - `D.keys()`                     返回可迭代的dict_keys集合对象。
-  - `D.values()`                  返回可迭代的dict_values集合对象。
-  - `D.items()`                   返回可迭代的dict_items集合对象。
+
+- `D.keys()`                     返回可迭代的dict_keys集合对象。
+- `D.values()`                  返回可迭代的dict_values集合对象。
+- `D.items()`                   返回可迭代的dict_items集合对象。
   
 **遍历**：`for k,v in d.items():`。
 
 **成员判断**：`key in d`。
 
 **生成函数**：
+
 - `dict()`创建空字典                         `d1=dict()`。
 - `dict(iterable)`用可迭代对象创建    `d1=dict([('name','amy'),('age',15)])`。
 - `dict(**kwargs)`关键字参数创建   `d1=dict(name='amy',age=17)`。
@@ -80,12 +88,12 @@
 
 ## 函数
 
-
 ### 匿名函数（lambda）
 
 **特点**：简洁，无需函数名，创建后即用。
 
 **语法**：`lambda [参数1，参数2，…] : 表达式`
+
 - [ ]内的部分可省略。
 - 创建一个匿名函数对象，同def类似但不提供函数名
 - 不必担心函数名冲突，匿名函数也是一个函数对象
@@ -97,21 +105,23 @@
 **定义**：接受函数为参数，返回新函数的闭包函数，在代码运行期间动态增加功能。
 
 **语法**：`@装饰器名` 放在函数定义前。
+
 - 在被装饰函数定义完成后立即执行。
 - 把 `@log` 放到 `now()` 函数的定义处，相当于执行了语句：`now = log(now)`。
 - 本质：`func = decorator(func)`
 
 **基本结构**：
+
 ```python
 def metric(text):    #接受一个参数（比如要显示的文字）
-	def decorator(func):    #接受要被装饰的函数
-	    def wrapper(*args, **kwargs):    #实际执行函数的地方
-	        # 前置处理
-	        result = func(*args, **kwargs)
-	        # 后置处理
-	        return result
-	    return wrapper
-	return decorator
+ def decorator(func):    #接受要被装饰的函数
+     def wrapper(*args, **kwargs):    #实际执行函数的地方
+         # 前置处理
+         result = func(*args, **kwargs)
+         # 后置处理
+         return result
+     return wrapper
+ return decorator
 
 @decorator
 def target_function():
@@ -121,7 +131,6 @@ def target_function():
 ---
 
 ## 面向对象
-
 
 ### Class（类）
 
@@ -133,19 +142,19 @@ def target_function():
 
 - **创建**:
  **class关键字+类名**（通常是大写开头）**+(object)**（表示该类是从哪个类继承下来的，如果没有合适的继承类，就使用object类）。
- 
+
 **`__init__`方法**：可以在创建实例时把必须绑定的属性强制填写进去。
 第一个参数永远是`self`，表示创建的实例本身。
 不能传入空的参数，需要传入与`__init__`方法匹配的参数。
 
 ```python
   class Student(object):
-  	  # 类属性
+     # 类属性
       school = "福州大学"
-	      def __init__(self, name, score):
-		      # 实例属性
-	          self.name = name
-	          self.score = score
+       def __init__(self, name, score):
+        # 实例属性
+           self.name = name
+           self.score = score
   # 创建实例
   stu1 = Student("xiaomig", "90")
 
@@ -157,7 +166,7 @@ def target_function():
 
 - **实例**：
 创建 ：`实例 = 类名(参数)`
-调用：`实例.变量名`        
+调用：`实例.变量名`
 模块中调用：`模块名.实例.变量名`
 
 #### 属性
@@ -213,8 +222,10 @@ def target_function():
 #### 特点
 
 双下划线包围，在特定操作时自动调用。
+
 #### 常用魔法方法
-- 初始化 
+
+- 初始化
 `__init__(self, ...)`​ 在实例创建后被调用,初始化实例的属性。
 
 - 字符串
@@ -233,20 +244,20 @@ def target_function():
 `__add__(self, other)`  加，
 `__sub__(self, other)`  减，
 `__mul__(self, other)`  乘，
-`__truediv__(self, other) `除，
+`__truediv__(self, other)`除，
 `__floordiv__(self, other)`  整数除法 //，
-`__mod__(self, other) `取模 %，
+`__mod__(self, other)`取模 %，
 `__pow__(self, other)`  幂运算。
 
 - 类型转换
-`__int__(self) ` 转换为整数，调用int()时使用。
+`__int__(self)` 转换为整数，调用int()时使用。
 `__float__(self)`  转换为浮点数，调用float()时使用。
 `__complex__(self)`  转换为复数，调用complex()时使用。
 `__bool__(self)`  转换为布尔值，调用bool()时使用。
 `__index__(self)`   转换为整数索引，用于切片和bin()、hex()、oct()函数。
 
 - 容器类
-`__len__(self) ` 返回容器长度，调用`len()`时使用。
+`__len__(self)` 返回容器长度，调用`len()`时使用。
 `__getitem__(self, key)` 获取容器中指定元素，对应`self[key]`操作。
 `__setitem__(self, key, value)`设置容器中指定元素，对应`self[key] = value`操作。
 `__delitem__(self, key)` 删除容器中指定元素，对应`del self[key]`操作。
@@ -280,10 +291,11 @@ def target_function():
 `__aiter__(self)` 返回异步迭代器。
 `__anext__(self)` 返回异步迭代器的下一个值。
 `__aenter__(self)` 异步上下文管理器的进入方法。
-`__aexit__(self, exc_type, exc_val, exc_tb) `异步上下文管理器的退出方法。
+`__aexit__(self, exc_type, exc_val, exc_tb)`异步上下文管理器的退出方法。
 `__await__(self)` 返回迭代器，用于await表达式。
 
 - **总结**
+
 1. 魔法方法名称以双下划线开头和结尾。
 2. 大多数方法都有特定的调用时机。
 3. 实现运算符重载时，应保持数学语义。
@@ -296,6 +308,7 @@ def target_function():
 - 隐藏内部实现，通过方法访问数据。
 - **访问限制**：属性名前加双下划线 `__name` 变成私有属性。
 - 如果外部代码通过 `get_xxx()` 和 `set_xxx()` 方法安全访问和修改。
+
 ```python
 class Student(object):
     ...
@@ -310,7 +323,7 @@ class Student(object):
 - 单继承： `class 子类名（超类名）：`
 任何类都直接或间接的继承自object类，object类是一切类的超类。
 
-- 多继承： `class 子类名（超类名1，超类名2，…）:`	
+- 多继承： `class 子类名（超类名1，超类名2，…）:`
 当多个父类中拥有相同属性时，子类中使用时按照“广度优先”顺序搜索。
 
 - 相关函数/属性：
@@ -335,7 +348,6 @@ ___
 
 ## 文本处理
 
-
 ### re正则表达式
 
 **定义**：用于匹配、查找、替换文本。通过定义一种模式来描述要查找的文本。
@@ -345,6 +357,7 @@ ___
 ### 元字符：具有特殊含义的字符
 
 **位置匹配**：
+
 - `.` 匹配任意单个字符（除换行符） 如：`r.t` 匹配 `rat`，`rot` 等。
 - `$` 匹配字符串结尾 如：`boy$` 匹配以 boy 为行尾的字符串。
 - `^` 匹配字符串开头 如：`^boy` 匹配以 boy 为首行的字符串。
@@ -352,11 +365,13 @@ ___
 - `\B` 匹配非单词边界。
 
 **字符集合**：
+
 - `[ ]` 匹配括号中的任何一个字符 如：`r[aou]t` 匹配 `rat`, `rot`, `rut`。
 - `[^]` 匹配不在括号内的任意字符 如：`[\^269A-C]` 匹配除 2,6,9,A,B,C 以外的任字符。
 - `[c1-c2]` 括号中可使用连字符 `-` 来指定字符的区间 如：`[0-9]` → 任意数字，`[a-zA-Z]` → 任意字母。
 
 **转义字符**：
+
 - `\` 转义特殊字符 如：`\\.` 匹配字符 `.`
 - `\w` 匹配字母数字及下划线。
 - `\W` 匹配非字母数字非下划线。
@@ -370,6 +385,7 @@ ___
 - `\<` 和 `\>` 匹配词（word）的开始和结束。如：`<the` 匹配 them，但不匹配 other；`>the` 匹配 breathe，但不匹配 other。
 
 **量词（重复匹配）**：
+
 - `*` 匹配 0 个或多个在它之前的那个字符 如：`r*t` 匹配 t，rt，rrt 等。
 - `+` 匹配 1 或多个正好在它之前的那个字符 如：`r+t` 匹配 rt、rrt 等，但不匹配 t。
 - `?` 匹配 0 或 1 个在它之前的那个字符 如：`r?t` 只匹配 t 和 rt。
@@ -476,15 +492,16 @@ count：模式匹配后替换的最大次数，默认0表示替换所有的匹�
 - `(?! re)` 负向先行断言。匹配一个位置，后面不能跟着指定的模式。
 - `(?> re)` 匹配的独立模式，一旦匹配不会回溯。。
 
-___
+---
 
 ## 代码格式
-
 
 ### 推导式
 
 #### 列表推导式
+
 - 定义：
+
 ```python
 colors = ["red", "green", "blue"]
 sizes = ["S", "M", "L"]
@@ -495,7 +512,7 @@ combinations = [(color, size) for color in colors for size in sizes]
 - 条件表达式
 
  跟在for后面的if是一个筛选条件，不能带else；把if写在for前面必须加else
- 
+
  ```python
  # 在for循环前使用if-else（三元表达式）
 numbers = [1, 2, 3, 4, 5, 6]
@@ -546,9 +563,7 @@ first_three = [next(gen) for _ in range(3)]
 # [0, 4, 16]
 ```
 
-
 ### Type Hint（类型注释）
-
 
 - **基本语法**：变量：`变量: 类型 = 值` ；函数：`def 函数(参数: 类型) -> 返回类型:`
 
@@ -588,18 +603,19 @@ unique_numbers: set[int] = {1, 2, 3, 4, 5}
 #函数类型
 from typing import List, Dict, Set, Tuple
 def process_students_v2(students: dict[str, int]) -> dict[str, int]:
-	return {name: age + 1 for name, age in students.items()}
+ return {name: age + 1 for name, age in students.items()}
 ```
 
 - **函数类型注释**
+
 ```python
 # 参数类型
 def greet(name: str, times: int = 1) -> str:
-	return (f"Hello, {name}! " * times).strip()
+ return (f"Hello, {name}! " * times).strip()
 
 # 无返回值
 def print_hello(name: str) -> None:
-	print(f"Hello, {name}")
+ print(f"Hello, {name}")
 ```
 
 - **可选类型：**（可能为None）`Optional[str]` 或 `str | None`
@@ -609,9 +625,9 @@ from typing import Optional
 
 # 表示 name 可能是 str 或 None
 def greet(name: Optional[str] = None) -> str:
-	if name is None:
-		return "Hello, World!"
-	return f"Hello, {name}!"
+ if name is None:
+  return "Hello, World!"
+ return f"Hello, {name}!"
 ```
 
 - **联合类型：`Union[int, float]` 或 `int | float`**
@@ -621,10 +637,10 @@ from typing import Union
 
 # 返回值可能是 int 或 float
 def divide(a: float, b: float) -> Union[int, float]:
-	result = a / b
-	if result.is_integer():
-		return int(result)
-	return result
+ result = a / b
+ if result.is_integer():
+  return int(result)
+ return result
 ```
 
 - **任意类型和任意多个参数：** `Any`
@@ -634,18 +650,18 @@ from typing import Any, Callable
 
 # Any 表示任意类型
 def process_data(data: Any) -> Any:
-	# 这里可以处理任何类型的数据
-	return data
-	
+ # 这里可以处理任何类型的数据
+ return data
+ 
 # 任意多个参数
 from typing import Union
 
 def sum_all(*args: int) -> int:
-	return sum(args)
+ return sum(args)
 
 def print_info(**kwargs: Union[str, int]) -> None:
-	for key, value in kwargs.items():
-		print(f"{key}: {value}")
+ for key, value in kwargs.items():
+  print(f"{key}: {value}")
 ```
 
 - **类型别名：**
@@ -659,18 +675,17 @@ Coordinates = Tuple[float, float]
 
 # 使用类型别名
 def process_student(student: Student) -> None:
-	print(student)
+ print(student)
 
 def get_distance(point1: Coordinates, point2: Coordinates) -> float:
-	x1, y1 = point1
-	x2, y2 = point2
-	return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+ x1, y1 = point1
+ x2, y2 = point2
+ return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
 ```
 
 ___
 
 ## 进阶技巧
-
 
 ### generator 生成器
 
@@ -687,21 +702,21 @@ squares = (x**2 for x in range(5))
 print(list(squares))  # [0, 1, 4, 9, 16]
 ```
 
-2. **yield 函数**
+1. **yield 函数**
 
 在调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。
 
 ```python
 def countdown(n):
 """倒计时的生成器函数"""
-	print(f"开始倒计时: {n}")
-	while n > 0:
-		yield n
-		n -= 1
-	print("倒计时结束!")
+ print(f"开始倒计时: {n}")
+ while n > 0:
+  yield n
+  n -= 1
+ print("倒计时结束!")
 # 使用生成器
 for num in countdown(5):
-	print(num)
+ print(num)
 ```
 
 **next()方法**
@@ -711,11 +726,10 @@ for num in countdown(5):
 ```python
 def fib():
 """斐波那契数列生成器"""
-	a, b = 0, 1
-	while True:
-		yield a
-		a, b = b, a + b
-		fib = fibonacci()
-		print(next(fib))  # 0
+ a, b = 0, 1
+ while True:
+  yield a
+  a, b = b, a + b
+  fib = fibonacci()
+  print(next(fib))  # 0
  ```
-
