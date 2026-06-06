@@ -1,48 +1,19 @@
 import requests
 import csv
 
-lat=26.05942
-long=119.198
-start="2024-01-01"
-end="2024-12-31"
-timezone="Asia/Shanghai"
-
-hourly_weather_variables=[
-    "temperature_2m",
-    "relative_humidity_2m",
-    "apparent_temperature",
-    "precipitation",
-    "weather_code",
-    "cloud_cover_total",
-    "wind_speed_10m",
-    "wind_direction_10m",
-    "shortwave_radiation_instant",
-    "is_day",
-]
-
-daily_weather_variables=[
-    "temperature_2m_mean",
-    "temperature_2m_max",
-    "temperature_2m_min",
-    "precipitation_sum",
-    "sunshine_duration",
-]
-
-BASE_URL = "https://archive-api.open-meteo.com/v1/archive"
 params = {
-    "latitude": lat,
-    "longitude": long,
-    "start_date": start,
-    "end_date": end,
-    "hourly": ",".join(hourly_weather_variables),
-    "daily": ",".join(daily_weather_variables),
-    "timezone": timezone
+    "latitude": 26.05942,
+    "longitude": 119.198,
+    "start_date": "2024-01-01",
+    "end_date": "2024-12-31",
+    "hourly": "temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,cloud_cover_total,wind_speed_10m,wind_direction_10m,shortwave_radiation_instant,is_day",
+    "daily": "temperature_2m_mean,temperature_2m_max,temperature_2m_min,precipitation_sum,sunshine_duration",
+    "timezone":"Asia/Shanghai"
 }
 
-resp=requests.get(BASE_URL, params=params, timeout=30)
+resp=requests.get("https://archive-api.open-meteo.com/v1/archive", params=params, timeout=30)
 resp.raise_for_status()
 data=resp.json()
-print("数据获取成功！")
 
 hourly_data=data.get("hourly", {})
 hourly_time=hourly_data.get("time", [])
