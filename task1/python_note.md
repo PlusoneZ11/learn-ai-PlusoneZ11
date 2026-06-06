@@ -7,7 +7,7 @@
 **索引**：访问 list 中每一个位置的元素。
 
 - 从 0 开始；-1 获取最后一个元素。
-- 正向索引：0~len(x)-1，反向索引：-len(x)~-1。
+- 正向索引：`0~len(x)-1`，反向索引：`-len(x)~-1`。
 - 当索引超出范围时，会报 IndexError 错误。
   
 **切片**：等同于字符串索引。
@@ -344,7 +344,7 @@ class Student(object):
 
 - **覆盖/重写 overwrite**：子类定义与父类同名的方法，调用时优先使用子类方法。
 
-___
+---
 
 ## 文本处理
 
@@ -683,7 +683,8 @@ def get_distance(point1: Coordinates, point2: Coordinates) -> float:
  return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
 ```
 
-___
+---
+
 
 ## 进阶技巧
 
